@@ -33,7 +33,7 @@ export default function RentalSection() {
   const selectedDuration = durations.find((d) => d.label === duration);
   const structureMultiplier = structure === "Wedding Coverage" ? 1.5 : structure === "Event Coverage" ? 1.3 : 1;
   const price = selectedEquip && selectedDuration
-    ? Math.round(selectedEquip.base * selectedDuration.multiplier * structureMultiplier)
+    ? Math.round(selectedEquip.base * 1000 * selectedDuration.multiplier * structureMultiplier)
     : 0;
 
   const step = !selected ? 1 : !structure ? 2 : !duration ? 3 : 4;
@@ -72,7 +72,7 @@ export default function RentalSection() {
                   >
                     <eq.icon className={cn("w-6 h-6 mb-2", selected === eq.id ? "text-primary" : "text-muted-foreground group-hover:text-primary")} />
                     <div className="text-sm font-medium text-foreground">{eq.name}</div>
-                    <div className="text-xs text-muted-foreground mt-1">${eq.base}/hr</div>
+                    <div className="text-xs text-muted-foreground mt-1">₹{eq.base}/hr</div>
                   </button>
                 ))}
               </div>
@@ -177,7 +177,7 @@ export default function RentalSection() {
                 </div>
                 <div className="border-t border-border pt-4 flex justify-between items-center">
                   <span className="text-muted-foreground font-medium">Total</span>
-                  <span className="text-2xl font-bold gradient-text">${price || "—"}</span>
+                  <span className="text-2xl font-bold gradient-text">₹{price || "—"}</span>
                 </div>
               </div>
               <Button
