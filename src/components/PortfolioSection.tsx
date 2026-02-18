@@ -1,24 +1,32 @@
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+
 const categories = ["All", "Wedding", "Pre-Wedding", "Fashion", "Product", "Event", "Drone", "Cinematic"];
 
-const mockImages = Array.from({ length: 12 }, (_, i) => ({
+// Create an array of your image paths
+const imagePaths = [
+  "/img1.jpeg",
+  "/img2.jpeg", 
+  "/img3.jpeg",
+  "/img4.jpeg",
+  "/img5.jpeg",
+  "/img6.jpeg",
+  "/img7.jpeg",
+  "/img8.jpeg",
+  "/img9.jpeg",
+  "/img10.jpeg"
+];
+
+// Map images to categories (you can customize this distribution)
+const mockImages = Array.from({ length: 10 }, (_, i) => ({
   id: i + 1,
-  category: categories[1 + (i % 7)],
+  category: categories[1 + (i % 7)], // Distributes images across categories
   title: `Project ${i + 1}`,
   photographer: ["Alex Rivera", "Mia Chen", "Jordan Brooks", "Priya Sharma"][i % 4],
   aspect: i % 3 === 0 ? "tall" : i % 3 === 1 ? "wide" : "square",
+  imagePath: imagePaths[i] // Add the image path
 }));
-
-const placeholderColors = [
-  "from-primary/30 to-accent/20",
-  "from-accent/30 to-primary/20",
-  "from-primary/20 to-secondary",
-  "from-secondary to-primary/30",
-  "from-accent/20 to-secondary",
-  "from-primary/40 to-accent/10",
-];
 
 export default function PortfolioSection() {
   const [active, setActive] = useState("All");
@@ -61,11 +69,18 @@ export default function PortfolioSection() {
               key={img.id}
               className="break-inside-avoid group relative overflow-hidden rounded-xl cursor-pointer reveal"
             >
-              <div
-                className={`bg-gradient-to-br ${placeholderColors[img.id % placeholderColors.length]} ${
-                  img.aspect === "tall" ? "h-80" : img.aspect === "wide" ? "h-48" : "h-64"
-                } w-full transition-transform duration-500 group-hover:scale-110`}
-              />
+              {/* Image container with Next.js Image component */}
+              <div className={`relative ${
+                img.aspect === "tall" ? "h-96" : img.aspect === "wide" ? "h-64" : "h-80"
+              } w-full overflow-hidden bg-gray-100`}>
+                <img
+                  src={img.imagePath}
+                  alt={img.title}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+
+              </div>
+              
               {/* Overlay */}
               <div className="absolute inset-0 bg-background/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-end p-6">
                 <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
@@ -74,6 +89,7 @@ export default function PortfolioSection() {
                   <p className="text-sm text-muted-foreground">by {img.photographer}</p>
                 </div>
               </div>
+              
               {/* Flash effect */}
               <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-100 pointer-events-none group-hover:animate-pulse" style={{ animationIterationCount: 1, animationDuration: "0.3s" }} />
             </div>
@@ -95,29 +111,44 @@ export default function PortfolioSection() {
 function BeforeAfterSlider() {
   const [position, setPosition] = useState(50);
 
+  const beforeImage = "/after.jpeg";
+  const afterImage = "/before.jpeg";
+
   return (
-    <div className="relative max-w-2xl mx-auto h-80 rounded-xl overflow-hidden glass border border-border cursor-ew-resize select-none">
-      {/* "Before" side */}
-      <div className="absolute inset-0 bg-gradient-to-br from-muted to-secondary flex items-center justify-center">
-        <span className="text-muted-foreground text-lg font-medium">Before</span>
+    <div className="relative max-w-2xl mx-auto h-80 rounded-xl overflow-hidden border cursor-ew-resize select-none">
+
+      {/* BEFORE */}
+      <div className="absolute inset-0">
+        <img
+          src={beforeImage}
+          alt="Before"
+          className="w-full h-full object-cover"
+        />
       </div>
-      {/* "After" side */}
+
+      {/* AFTER */}
       <div
-        className="absolute inset-0 bg-gradient-to-br from-primary/30 to-accent/20 flex items-center justify-center"
+        className="absolute inset-0"
         style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
       >
-        <span className="text-foreground text-lg font-medium">After</span>
+        <img
+          src={afterImage}
+          alt="After"
+          className="w-full h-full object-cover"
+        />
       </div>
-      {/* Slider handle */}
+
+      {/* SLIDER LINE */}
       <div
-        className="absolute top-0 bottom-0 w-1 bg-primary glow-purple cursor-ew-resize z-10"
+        className="absolute top-0 bottom-0 w-1 bg-primary z-10"
         style={{ left: `${position}%` }}
       >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-xs font-bold glow-purple">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center text-xs font-bold">
           ↔
         </div>
       </div>
-      {/* Invisible drag area */}
+
+      {/* DRAG AREA */}
       <div
         className="absolute inset-0 z-20"
         onMouseMove={(e) => {
@@ -130,8 +161,6 @@ function BeforeAfterSlider() {
           setPosition(((touch.clientX - rect.left) / rect.width) * 100);
         }}
       />
-      <div className="absolute top-4 left-4 glass px-3 py-1 rounded-full text-xs text-muted-foreground z-30">Before</div>
-      <div className="absolute top-4 right-4 glass px-3 py-1 rounded-full text-xs text-muted-foreground z-30">After</div>
     </div>
   );
 }

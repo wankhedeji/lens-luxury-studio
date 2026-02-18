@@ -19,10 +19,10 @@ export default function HeroSection() {
       <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-accent/8 rounded-full blur-[100px]" />
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 text-center">
-        <div className="inline-block mb-6 px-4 py-2 glass rounded-full text-sm text-muted-foreground animate-fade-in">
+      <div className="relative m-16 z-10 container mx-auto px-4 text-center">
+        {/* <div className="inline-block mb-6 px-4 py-2 glass rounded-full text-sm text-muted-foreground animate-fade-in">
           ✦ Premium Photography & Videography Studio
-        </div>
+        </div> */}
 
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight opacity-0 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
           Capture Every
