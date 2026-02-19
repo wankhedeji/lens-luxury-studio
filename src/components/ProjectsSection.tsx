@@ -6,7 +6,7 @@ const gridImages = Array.from(
 );
 
 const projects = [
-  { year: "2025", client: "Sharma & Patel", type: "Wedding", location: "Udaipur, India", desc: "A lavish 3-day wedding celebration captured across palace grounds and lakeside venues.", metrics: "500+ photos • 45 min film", image: gridImages[0]
+  { year: "2026", client: "Sharma & Patel", type: "Wedding", location: "Udaipur, India", desc: "A lavish 3-day wedding celebration captured across palace grounds and lakeside venues.", metrics: "500+ photos • 45 min film", image: gridImages[0]
  },
   { year: "2024", client: "Luxe Fashion Co.", type: "Fashion Editorial", location: "Milan, Italy", desc: "SS24 campaign shot across iconic Milanese architecture with 12 models.", metrics: "3 magazine features • 2M reach", image: gridImages[1] },
   { year: "2024", client: "SkyView Estates", type: "Drone Aerial", location: "Dubai, UAE", desc: "Aerial real estate showcase for a premium beachfront development.", metrics: "8K footage • 200+ aerial shots", image: gridImages[2], },
